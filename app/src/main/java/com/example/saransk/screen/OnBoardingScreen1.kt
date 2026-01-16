@@ -33,6 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.saransk.R
 import com.example.saransk.ui.theme.Blue
 import com.example.saransk.ui.theme.FredokaFamily
@@ -42,7 +45,7 @@ import com.example.saransk.ui.theme.SaranskTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun OnBoardingScreen1(modifier: Modifier = Modifier) {
+fun OnBoardingScreen1(viewModel: ViewModel, navController : NavHostController = rememberNavController()) {
     Scaffold {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -56,9 +59,12 @@ fun OnBoardingScreen1(modifier: Modifier = Modifier) {
 
             )
             Spacer(modifier = Modifier.height(120.dp))
-            val pagerState = rememberPagerState(pageCount = {
-                3
-            })
+            val currentPage by viewModel.currentPage.collectAsState()
+            val pagerState = rememberPagerState(
+                initialPage = currentPage,
+                pageCount = { 3 }
+            )
+
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxWidth()

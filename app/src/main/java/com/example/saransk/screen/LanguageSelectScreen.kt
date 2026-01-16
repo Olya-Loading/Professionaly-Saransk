@@ -3,9 +3,12 @@ package com.example.saransk.screen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -15,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.saransk.ui.theme.Blue
 import com.example.saransk.ui.theme.FredokaFamily
 import com.example.saransk.ui.theme.Orange
@@ -31,10 +38,16 @@ import com.example.saransk.ui.theme.Orange_2
 import com.example.saransk.ui.theme.Purple
 import com.example.saransk.ui.theme.SaranskTheme
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageSelectScreen(modifier: Modifier = Modifier) {
+fun LanguageSelectScreen(modifier: Modifier = Modifier,navController : NavHostController = rememberNavController()) {
+    val selectedIndex = remember { mutableIntStateOf(0) }
+    val languages = listOf(
+        "Russian", "English", "Chinese", "Belarus", "Kazakh"
+    )
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -43,164 +56,67 @@ fun LanguageSelectScreen(modifier: Modifier = Modifier) {
                     Text(
                         modifier = Modifier.padding(start = 90.dp),
                         text = "Language select",
-                        fontSize = 22.sp,
+                        fontSize = 19.sp,
                         fontFamily = FredokaFamily,
                         fontWeight = FontWeight.Medium, color = Color.White
                     )
                 })
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 80.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(modifier = Modifier.padding(innerPadding), horizontalAlignment = Alignment.CenterHorizontally){
             Text(
                 text = "What is your Mother language?",
                 fontSize = 22.sp,
                 fontFamily = FredokaFamily,
-                fontWeight = FontWeight.Medium, modifier = Modifier.padding(bottom = 20.dp)
+                fontWeight = FontWeight.Medium, modifier = Modifier.padding(bottom = 20.dp, top = 15.dp)
             )
 
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .width(327.dp)
-                    .height(67.dp),
-                colors = ButtonDefaults.buttonColors(
-                    Orange
-                ), shape = RoundedCornerShape(20.dp)
-            ) {
 
-                Text(
-                    text = "Russian",
-                    modifier = Modifier,
-                    textAlign = TextAlign.Start,
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontFamily = FredokaFamily,
-                    fontWeight = FontWeight.Medium
-                )
-            }
 
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .width(327.dp)
-                    .height(67.dp),
-                colors = ButtonDefaults.buttonColors(
-                    Orange_2
-                ),
-                shape = RoundedCornerShape(18.dp)
-            ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth().height(550.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(languages) { item ->
+                val currentIndex = languages.indexOf(item)
+                Button(
+                    onClick = {
+                        if (item == "Russian" || item == "English") selectedIndex.value =
+                            currentIndex
+                    },
+                    modifier = Modifier
+                        .padding(bottom = 20.dp)
+                        .width(327.dp)
+                        .height(57.dp),
+                    colors = ButtonDefaults.buttonColors(if (currentIndex == selectedIndex.value) Orange else Orange_2),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text(
+                        text = item,
+                        modifier = Modifier.fillMaxSize(),
 
-                Text(
-                    text = "English",
-                    modifier = Modifier,
-                    textAlign = TextAlign.Start,
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontFamily = FredokaFamily,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .width(327.dp)
-                    .height(67.dp),
-                colors = ButtonDefaults.buttonColors(
-                    Orange_2
-                ),
-                shape = RoundedCornerShape(18.dp)
-            ) {
+                        color = Color.Black,
+                        fontSize = 22.sp,
+                        fontFamily = FredokaFamily,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
 
-                Text(
-                    text = "Chinese",
-                    modifier = Modifier,
-                    textAlign = TextAlign.Start,
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontFamily = FredokaFamily,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .width(327.dp)
-                    .height(67.dp),
-                colors = ButtonDefaults.buttonColors(
-                    Orange_2
-                ),
-                shape = RoundedCornerShape(18.dp)
-            ) {
 
-                Text(
-                    text = "Belarus",
-                    modifier = Modifier,
-                    textAlign = TextAlign.Start,
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontFamily = FredokaFamily,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 220.dp)
-                    .width(327.dp)
-                    .height(67.dp),
-                colors = ButtonDefaults.buttonColors(
-                    Orange_2
-                ),
-                shape = RoundedCornerShape(18.dp)
-            ) {
-
-                Text(
-                    text = "Kazakh",
-                    modifier = Modifier,
-                    textAlign = TextAlign.Start,
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontFamily = FredokaFamily,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-            Button(
-                onClick = {},
-                modifier = Modifier
-
-                    .width(327.dp)
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    Blue
-                ),
-                shape = RoundedCornerShape(14.dp)
-            ) {
-
-                Text(
-                    text = "Choose",
-                    modifier = Modifier,
-                    textAlign = TextAlign.Start,
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontFamily = FredokaFamily,
-                    fontWeight = FontWeight.Medium
-                )
             }
 
 
         }
-    }
-
+        Button(
+            colors = ButtonDefaults.buttonColors(Blue),
+            onClick = {},
+            shape = RoundedCornerShape(11.dp),
+            modifier = Modifier.padding(top = 90.dp)
+                .width(327.dp)
+                .height(56.dp)
+        ) { Text(text = "Choose", fontSize = 21.sp) }
+    }}
 }
 
 @Preview

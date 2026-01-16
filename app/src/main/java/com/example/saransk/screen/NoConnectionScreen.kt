@@ -25,6 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.saransk.R
 import com.example.saransk.ui.theme.Purple40
 import com.example.saransk.ui.theme.SaranskTheme
@@ -32,7 +34,7 @@ import com.example.saransk.ui.theme.SaranskTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceAsColor")
 @Composable
-fun NoConnection(modifier: Modifier = Modifier) {
+fun NoConnection(modifier: Modifier = Modifier,navController : NavHostController = rememberNavController()) {
     Scaffold(topBar = {
         TopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
