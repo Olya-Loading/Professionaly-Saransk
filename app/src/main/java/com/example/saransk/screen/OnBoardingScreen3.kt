@@ -58,31 +58,7 @@ fun OnBoardingScreen3(modifier: Modifier = Modifier, navController : NavHostCont
 
             )
             Spacer(modifier = Modifier.height(120.dp))
-            val pagerState = rememberPagerState(pageCount = {
-                3
-            })
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth()
-            ) {}
-            Row(
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Orange else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(start = 6.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(8.dp)
-                    )
-                }
-            }
+            PagerIndicator(3,2)
             Text(
                 text = "The lessons you need to learn",
                 modifier = Modifier.padding(top = 30.dp),
@@ -102,7 +78,7 @@ fun OnBoardingScreen3(modifier: Modifier = Modifier, navController : NavHostCont
 
 
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Destinations.SignUpScreen.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier
                     .width(327.dp)

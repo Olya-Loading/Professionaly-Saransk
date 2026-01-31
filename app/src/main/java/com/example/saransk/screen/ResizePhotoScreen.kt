@@ -15,7 +15,7 @@ import com.example.saransk.ui.theme.FredokaFamily
 
 @Composable
 fun ResizePhotoScreen(modifier: Modifier = Modifier) {
-    Scaffold(topBar = TopAppBar(title = { Text("Your photo is gorgeous!", fontFamily = FredokaFamily, fontWeight = FontWeight.Medium , fontSize = 22.sp) })) {  }
+    //Scaffold(topBar = TopAppBar(title = { Text("Your photo is gorgeous!", fontFamily = FredokaFamily, fontWeight = FontWeight.Medium , fontSize = 22.sp) })) {  }
     Column(modifier = Modifier.fillMaxSize()){}
 }
 

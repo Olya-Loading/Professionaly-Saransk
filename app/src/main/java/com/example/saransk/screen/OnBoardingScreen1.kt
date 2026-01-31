@@ -45,7 +45,7 @@ import com.example.saransk.ui.theme.SaranskTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun OnBoardingScreen1(viewModel: ViewModel, navController : NavHostController = rememberNavController()) {
+fun OnBoardingScreen1(modifier: Modifier, navController : NavHostController = rememberNavController()) {
     Scaffold {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -59,34 +59,7 @@ fun OnBoardingScreen1(viewModel: ViewModel, navController : NavHostController = 
 
             )
             Spacer(modifier = Modifier.height(120.dp))
-            val currentPage by viewModel.currentPage.collectAsState()
-            val pagerState = rememberPagerState(
-                initialPage = currentPage,
-                pageCount = { 3 }
-            )
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth()
-            ) {}
-            Row(
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Orange else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(start = 6.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(8.dp)
-                    )
-                }
-            }
+            PagerIndicator(3,0)
             Text(
                 text = "Confidence in your words",
                 modifier = Modifier.padding(top = 30.dp),
@@ -106,7 +79,7 @@ fun OnBoardingScreen1(viewModel: ViewModel, navController : NavHostController = 
 
 
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Destinations.OnBoardingScreen2.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier
                     .width(327.dp)
@@ -130,11 +103,69 @@ fun OnBoardingScreen1(viewModel: ViewModel, navController : NavHostController = 
     }
 
 }
-
 @Preview
 @Composable
 private fun OnB1() {
     SaranskTheme {
-        OnBoardingScreen1(modifier = Modifier)
+        //OnBoardingScreen1(modifier = Modifier)
+    }
+}
+
+@Composable
+fun Card(image:Int,text1 :String,text2 :String, button_text:String, text3:String) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Image(
+            painter = painterResource(R.drawable.illustrations_1),
+            contentDescription = "",
+            modifier = Modifier
+                .padding(top = 140.dp)
+                .size(240.dp)
+
+        )
+        Spacer(modifier = Modifier.height(120.dp))
+
+        Text(
+            text = text1,
+            modifier = Modifier.padding(top = 30.dp),
+            fontSize = 22.sp,
+            fontFamily = FredokaFamily,
+            fontWeight = FontWeight.Medium
+        )
+        Box(modifier = Modifier.width(263.dp), contentAlignment = Alignment.Center) {
+            Text(
+                text = text2,
+                modifier = Modifier.padding(top = 10.dp, bottom = 50.dp),color = Grey,
+                fontSize = 15.sp,
+                fontFamily = FredokaFamily,
+                fontWeight = FontWeight.Light
+            )
+        }
+
+
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(11.dp),
+            modifier = Modifier
+                .width(327.dp)
+                .height(56.dp), colors = ButtonDefaults.buttonColors(Blue)
+        ) {
+            Text(
+                text = button_text,
+                fontSize = 21.sp,
+                fontFamily = FredokaFamily,
+                fontWeight = FontWeight.Medium
+            )
+        }
+        Text(
+            text = text3,
+            modifier = Modifier.padding(top = 22.dp),
+            fontSize = 15.sp,
+            fontFamily = FredokaFamily,
+            fontWeight = FontWeight.Light
+        )
     }
 }

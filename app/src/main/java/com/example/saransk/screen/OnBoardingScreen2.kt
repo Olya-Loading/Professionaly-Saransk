@@ -58,31 +58,7 @@ fun OnBoardingScreen2(modifier: Modifier = Modifier, navController : NavHostCont
 
             )
             Spacer(modifier = Modifier.height(120.dp))
-            val pagerState = rememberPagerState(pageCount = {
-                3
-            })
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth()
-            ) {}
-            Row(
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Orange else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(start = 6.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(8.dp)
-                    )
-                }
-            }
+            PagerIndicator(3,1)
             Text(
                 text = "Take your time to learn",
                 modifier = Modifier.padding(top = 30.dp),
@@ -102,7 +78,7 @@ fun OnBoardingScreen2(modifier: Modifier = Modifier, navController : NavHostCont
 
 
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Destinations.OnBoardingScreen3.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier
                     .width(327.dp)
@@ -132,4 +108,28 @@ fun OnBoardingScreen2(modifier: Modifier = Modifier, navController : NavHostCont
 @Composable
 private fun OnBoard2() {
     SaranskTheme { OnBoardingScreen2(modifier = Modifier) }
+}
+@Composable
+fun PagerIndicator(pageCount: Int, currentPageIndex: Int, modifier: Modifier = Modifier) {
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(pageCount) { iteration ->
+                val color = if (currentPageIndex == iteration) Orange else Color.LightGray
+                Box(
+                    modifier = modifier
+                        .padding(2.dp)
+                        .clip(CircleShape)
+                        .background(color)
+                        .size(11.dp)
+                )
+            }
+        }
+    }
 }

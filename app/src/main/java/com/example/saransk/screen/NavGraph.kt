@@ -1,11 +1,7 @@
 package com.example.saransk.screen
-
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,6 +17,7 @@ sealed class Destinations(val route: String){
     data object SignUpScreen: Destinations("sign_up1")
     data object SignUp2Screen: Destinations("sign_up2")
     data object SplashScreen: Destinations("splash")
+    data object MainScreen: Destinations("main")
 }
 
 @Composable
@@ -40,11 +37,26 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(Destinations.ProfileScreen.route) {
             ProfileScreen(modifier = modifier,navController)
         }
+        composable(Destinations.OnBoardingScreen1.route) {
+            OnBoardingScreen1(modifier= Modifier,navController)
+        }
+        composable(Destinations.OnBoardingScreen2.route) {
+            OnBoardingScreen2(modifier= Modifier,navController)
+        }
+        composable(Destinations.OnBoardingScreen3.route) {
+            OnBoardingScreen3(modifier= Modifier,navController)
+        }
         composable(Destinations.SignUpScreen.route) {
             SignUpScreen(modifier = Modifier, navController)
         }
+        composable(Destinations.SignUp2Screen.route) {
+            SignUp2Screen(modifier = Modifier, navController)
+        }
         composable(Destinations.LoginScreen.route) {
             LoginScreen(modifier = Modifier, navController)
+        }
+        composable(Destinations.MainScreen.route) {
+            MainScreen(modifier = Modifier)
         }
     }
 }

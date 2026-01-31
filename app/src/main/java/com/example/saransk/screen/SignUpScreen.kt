@@ -1,6 +1,7 @@
 package com.example.saransk.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,7 +57,7 @@ fun SignUpScreen(modifier: Modifier = Modifier,navController : NavHostController
                         fontWeight = FontWeight.Medium, color = Color.White
                     )
                 },
-                navigationIcon = { Icon(painter = painterResource(R.drawable.icon_left), contentDescription = "", modifier = Modifier.padding(start = 30.dp).size(20.dp), tint = Color.White) })
+                navigationIcon = { Icon(painter = painterResource(R.drawable.icon_left), contentDescription = "", modifier = Modifier.padding(start = 30.dp).size(20.dp).clickable(onClick = { navController.popBackStack() }), tint = Color.White) })
 
     }) {innerPadding->
         Column(modifier = Modifier.fillMaxSize().padding(innerPadding), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -67,11 +68,49 @@ fun SignUpScreen(modifier: Modifier = Modifier,navController : NavHostController
                 fontWeight = FontWeight.Medium
                 , modifier = Modifier.padding(top = 40.dp, bottom = 10.dp)
             )
-            EditRegistration("First name", "Your First Name")
-            EditRegistration("Last Name", "Your Last Name")
+            val text = remember { mutableStateOf("") }
+            Column(modifier = Modifier.width(327.dp)){
+                Text(
+                    text = "Your First Name",
+                    fontSize = 15.sp,
+                    fontFamily = FredokaFamily,
+                    fontWeight = FontWeight.Light
+                    , modifier = Modifier.padding(top = 25.dp)
+                )
+
+                OutlinedTextField(
+                    value = text.value,
+                    onValueChange = { text.value = it },
+                    modifier = Modifier.width(327.dp),
+                    label = { Text(text = "Your First Name", color = darkGrey,fontSize = 15.sp,
+                        fontFamily = FredokaFamily,
+                        fontWeight = FontWeight.Light) },
+                    shape = RoundedCornerShape(18)
+                )
+            }
+            val text2 = remember { mutableStateOf("") }
+            Column(modifier = Modifier.width(327.dp)){
+                Text(
+                    text = "Your Last Name",
+                    fontSize = 15.sp,
+                    fontFamily = FredokaFamily,
+                    fontWeight = FontWeight.Light
+                    , modifier = Modifier.padding(top = 25.dp)
+                )
+
+                OutlinedTextField(
+                    value = text2.value,
+                    onValueChange = { text2.value = it },
+                    modifier = Modifier.width(327.dp),
+                    label = { Text(text = "Your Last Name", color = darkGrey,fontSize = 15.sp,
+                        fontFamily = FredokaFamily,
+                        fontWeight = FontWeight.Light) },
+                    shape = RoundedCornerShape(18)
+                )
+            }
             EditRegistration("Email Address", "Email")
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Destinations.LoginScreen.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier.padding(top = 40.dp)
                     .width(327.dp)
