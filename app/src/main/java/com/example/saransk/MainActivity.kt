@@ -24,11 +24,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SaranskTheme {
-                val pagerViewModel : PagerViewModel by viewModels()
                 val navController = rememberNavController()
-                NavGraph(navController = navController)
-                SplashScreen(modifier = Modifier, navController=navController)
-
+                NavGraph( navController)
             }
         }
     }

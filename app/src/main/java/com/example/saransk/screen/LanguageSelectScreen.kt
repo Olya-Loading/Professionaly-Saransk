@@ -102,11 +102,7 @@ fun LanguageSelectScreen(modifier: Modifier = Modifier,navController : NavHostCo
                         fontWeight = FontWeight.Medium
                     )
                 }
-
-
             }
-
-
         }
         Button(
             colors = ButtonDefaults.buttonColors(Blue),

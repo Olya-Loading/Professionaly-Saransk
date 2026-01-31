@@ -1,0 +1,9 @@
+package com.example.saransk.screen
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+@Composable
+fun ExerciseWordPracticeScreen(modifier: Modifier = Modifier) {
+    
+}

@@ -1,8 +1,8 @@
 package com.example.saransk.screen
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,17 +51,16 @@ import com.example.saransk.ui.theme.lightGrey
 import androidx.compose.material3.OutlinedTextField
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-
+import com.example.saransk.ui.theme.Purple
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController = rememberNavController()) {
-
-
+    val email = remember { mutableStateOf("") }
     Scaffold(
         topBar = {
             TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Purple40),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Purple),
                 title = { Text(
                     modifier = Modifier.padding(start = 100.dp),
                     text = "Login",
@@ -75,7 +74,7 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                         contentDescription = "",
                         modifier = Modifier
                             .padding(start = 30.dp)
-                            .size(20.dp),
+                            .size(20.dp).clickable(onClick = { navController.popBackStack() }),
                         tint = Color.White
                     )
                 })
@@ -94,8 +93,6 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                     .size(105.dp)
                     .padding(top = 18.dp)
             )
-
-
             Text(
                 text = "For free, join now and ",
                 fontSize = 22.sp,
@@ -106,19 +103,52 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                 fontSize = 22.sp,
                 modifier = Modifier.padding(bottom = 20.dp)
             )
-
-
             Box() {
                 Column {
                     Text(text = "Email Address", fontSize = 15.sp)
-                    EditEmailRegistration("Email")
+
+                    OutlinedTextField(
+
+                        value = email.value,
+                        onValueChange = { email.value = it },
+                        modifier = Modifier.width(327.dp),
+                        label = { Text(text = "email", color = darkGrey) },
+                        shape = RoundedCornerShape(18), colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
+                            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.3f), unfocusedBorderColor = Color.Unspecified.copy(0.0f), focusedBorderColor = Color.Unspecified
+                        )
+
+                    )
                 }
             }
-            Box() {
 
-                    EditPasswordRegistration("Password")
+                val password = remember { mutableStateOf("") }
+                val passwordVisible = remember { mutableStateOf(false) }
+                Column(modifier = Modifier.width(327.dp)){
+                    Text(
+                        text ="Password",
+                        fontSize = 15.sp,
+                        fontFamily = FredokaFamily,
+                        fontWeight = FontWeight.Light
+                        , modifier = Modifier.padding(top = 25.dp)
+                    )
+                    OutlinedTextField(
+                        value = password.value,
+                        onValueChange = { password.value = it },
+                        modifier = Modifier.width(327.dp),
+                        label = { Text(text = "") },
+                        visualTransformation = if (passwordVisible.value)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
+                        shape = RoundedCornerShape(18),
+                        trailingIcon = {
+                            IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
+                                Icon(painter = painterResource(id = R.drawable.ic_eye), contentDescription = "")
+                            }
+                        }
+                    )
 
-            }
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier
@@ -134,7 +164,7 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                 )
             }
             Button(
-                onClick = {},
+                onClick = {if (isValidEmail(email.value) && isStrongPassword(password.value)) navController.navigate(Destinations.ProfileScreen.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier
                     .width(327.dp)
@@ -155,34 +185,31 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                 )
             }
         }
-
     }
+}}
 
-}
-
-fun isValidEmail(email: String): Boolean {
+fun isValidEmail(email: String):Boolean {
     val regex = Regex("^[a-z0-9]+@[a-z0-9]+\\.ru$")
     return regex.matches(email)
 }
-
 fun isStrongPassword(password: String): Boolean {
-    val regex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.* )(?=.*[^a-zA-Z0-9 ]).{8,}$")
+    val regex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.* )(?=.*[^a-zA-Z0-9]).{8,}$")
     return regex.matches(password)
 }
 @Composable
 fun EditEmailRegistration(label: String = "") {
-    val text = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
     OutlinedTextField(
-
-        value = text.value,
-        onValueChange = { text.value = it },
+        value = email.value,
+        onValueChange = {email.value = it },
         modifier = Modifier.width(327.dp),
         label = { Text(text = label, color = darkGrey) },
-        shape = RoundedCornerShape(18), colors = OutlinedTextFieldDefaults.colors(unfocusedContainerColor = lightGrey)
-
+        shape = RoundedCornerShape(18), colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
+            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.3f), unfocusedBorderColor = Color.Unspecified.copy(0.0f), focusedBorderColor = Color.Unspecified
+        )
     )
 }
-
 @Composable
 fun EditPasswordRegistration(text: String) {
     val password = remember { mutableStateOf("") }
@@ -192,8 +219,8 @@ fun EditPasswordRegistration(text: String) {
             text =text,
             fontSize = 15.sp,
             fontFamily = FredokaFamily,
-            fontWeight = FontWeight.Light
-            , modifier = Modifier.padding(top = 25.dp)
+            fontWeight = FontWeight.Light,
+            modifier = Modifier.padding(top = 25.dp)
         )
 
         OutlinedTextField(
@@ -211,7 +238,8 @@ fun EditPasswordRegistration(text: String) {
                 Icon(painter = painterResource(id = R.drawable.ic_eye), contentDescription = "")
             }
         }
-    )}
+    )
+    }
 }
 
 

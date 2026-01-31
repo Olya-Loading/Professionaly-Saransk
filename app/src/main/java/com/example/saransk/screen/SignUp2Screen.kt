@@ -1,14 +1,20 @@
 package com.example.saransk.screen
 
+import android.R.attr.checked
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,8 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,7 +63,7 @@ fun SignUp2Screen(modifier: Modifier = Modifier,navController : NavHostControlle
                     fontWeight = FontWeight.Medium, color = Color.White
                 )
             },
-            navigationIcon = { Icon(painter = painterResource(R.drawable.icon_left), contentDescription = "", modifier = Modifier.padding(start = 30.dp).size(20.dp), tint = Color.White) })
+            navigationIcon = { Icon(painter = painterResource(R.drawable.icon_left), contentDescription = "", modifier = Modifier.padding(start = 30.dp).size(20.dp).clickable(onClick = { navController.popBackStack() }), tint = Color.White) })
 
     }) {innerPadding->
         Column(modifier = Modifier.fillMaxSize().padding(innerPadding), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -68,9 +76,25 @@ fun SignUp2Screen(modifier: Modifier = Modifier,navController : NavHostControlle
             )
             EditPasswordRegistration("Password")
             EditPasswordRegistration("Confirm Password")
+            var checked by remember { mutableStateOf(false) }
+            Row( modifier = Modifier.fillMaxWidth().padding(top = 10.dp, start = 22.dp).height(25.dp)) {
+                Checkbox(
+                checked = checked,
+                onCheckedChange = { checked = it }, colors = CheckboxDefaults.colors(uncheckedColor = Blue, checkedColor = Blue)
+            )
+                Text("I ")
+                Text("have made myself acquainted with ", color = Blue)
+
+            }
+            Row(modifier = Modifier.fillMaxWidth().padding(start = 34.dp)){
+                Text("the Rules ", color = Blue)
+                Text(" and accept all its provisions,")
+            }
+
+
 
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Destinations.ProfileScreen.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier.padding(top = 40.dp)
                     .width(327.dp)
