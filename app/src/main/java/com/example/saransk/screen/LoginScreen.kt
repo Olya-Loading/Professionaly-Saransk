@@ -1,5 +1,6 @@
 package com.example.saransk.screen
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -74,7 +75,8 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                         contentDescription = "",
                         modifier = Modifier
                             .padding(start = 30.dp)
-                            .size(20.dp).clickable(onClick = { navController.popBackStack() }),
+                            .size(20.dp)
+                            .clickable(onClick = { navController.popBackStack() }),
                         tint = Color.White
                     )
                 })
@@ -122,32 +124,8 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                 }
             }
 
-                val password = remember { mutableStateOf("") }
-                val passwordVisible = remember { mutableStateOf(false) }
-                Column(modifier = Modifier.width(327.dp)){
-                    Text(
-                        text ="Password",
-                        fontSize = 15.sp,
-                        fontFamily = FredokaFamily,
-                        fontWeight = FontWeight.Light
-                        , modifier = Modifier.padding(top = 25.dp)
-                    )
-                    OutlinedTextField(
-                        value = password.value,
-                        onValueChange = { password.value = it },
-                        modifier = Modifier.width(327.dp),
-                        label = { Text(text = "") },
-                        visualTransformation = if (passwordVisible.value)
-                            VisualTransformation.None
-                        else
-                            PasswordVisualTransformation(),
-                        shape = RoundedCornerShape(18),
-                        trailingIcon = {
-                            IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                                Icon(painter = painterResource(id = R.drawable.ic_eye), contentDescription = "")
-                            }
-                        }
-                    )
+            EditPasswordRegistration("password")
+                    
 
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -164,7 +142,7 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                 )
             }
             Button(
-                onClick = {if (isValidEmail(email.value) && isStrongPassword(password.value)) navController.navigate(Destinations.ProfileScreen.route)},
+                onClick = { navController.navigate(Destinations.ProfileScreen.route)},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier
                     .width(327.dp)
@@ -186,7 +164,7 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
             }
         }
     }
-}}
+}
 
 fun isValidEmail(email: String):Boolean {
     val regex = Regex("^[a-z0-9]+@[a-z0-9]+\\.ru$")
@@ -210,6 +188,8 @@ fun EditEmailRegistration(label: String = "") {
         )
     )
 }
+
+
 @Composable
 fun EditPasswordRegistration(text: String) {
     val password = remember { mutableStateOf("") }
@@ -224,21 +204,21 @@ fun EditPasswordRegistration(text: String) {
         )
 
         OutlinedTextField(
-        value = password.value,
-        onValueChange = { password.value = it },
-        modifier = Modifier.width(327.dp),
-        label = { Text(text = "") },
-        visualTransformation = if (passwordVisible.value)
-            VisualTransformation.None
-        else
-            PasswordVisualTransformation(),
-        shape = RoundedCornerShape(18),
-        trailingIcon = {
-            IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                Icon(painter = painterResource(id = R.drawable.ic_eye), contentDescription = "")
+            value = password.value,
+            onValueChange = { if (isStrongPassword(password.value)) password.value = it else password.value=""},
+            modifier = Modifier.width(327.dp),
+            label = { Text(text = "") },
+            visualTransformation = if (passwordVisible.value)
+                VisualTransformation.None
+            else
+                PasswordVisualTransformation(),
+            shape = RoundedCornerShape(18),
+            trailingIcon = {
+                IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
+                    Icon(painter = painterResource(id = R.drawable.ic_eye), contentDescription = "")
+                }
             }
-        }
-    )
+        )
     }
 }
 

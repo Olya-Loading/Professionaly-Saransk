@@ -21,11 +21,10 @@ sealed class Destinations(val route: String){
 }
 
 @Composable
-fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
+fun NavGraph(navController: NavHostController, changeTheme:()->Unit) {
     NavHost(
         navController = navController,
         startDestination = Destinations.SplashScreen.route,
-        modifier = modifier
 
     ) {
         composable(Destinations.SplashScreen.route) {
@@ -35,7 +34,7 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
             LanguageSelectScreen(modifier = Modifier, navController)
         }
         composable(Destinations.ProfileScreen.route) {
-            ProfileScreen(modifier = modifier,navController)
+            ProfileScreen(navController, changeTheme)
         }
         composable(Destinations.OnBoardingScreen1.route) {
             OnBoardingScreen1(modifier= Modifier,navController)

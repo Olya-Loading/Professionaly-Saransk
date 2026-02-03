@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -46,8 +47,7 @@ import kotlinx.coroutines.coroutineScope
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(), changeTheme:()->Unit
 ) {
 
     Scaffold(topBar = {
@@ -85,7 +85,7 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(400.dp))
             Button(
                 colors = ButtonDefaults.buttonColors(Blue),
-                onClick = {},
+                onClick =  { changeTheme()},
                 shape = RoundedCornerShape(11.dp),
                 modifier = Modifier
                     .padding(top = 100.dp)
@@ -137,8 +137,3 @@ fun ProfileScreen(
 
 
 
-@Preview
-@Composable
-private fun ProfileScreenPrev() {
-    SaranskTheme { ProfileScreen(modifier = Modifier) }
-}
