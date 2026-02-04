@@ -29,8 +29,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            SaranskTheme {
-                var stateTheme by remember{mutableStateOf(false)}
+            var stateTheme by remember{mutableStateOf(false)}
+            SaranskTheme(stateTheme) {
                 val navController = rememberNavController()
                 NavGraph( navController , {stateTheme=!stateTheme})
             }

@@ -94,7 +94,7 @@ fun LanguageSelectScreen(modifier: Modifier = Modifier,navController : NavHostCo
                 ) {
                     Text(
                         text = item,
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxWidth(),
 
                         color = Color.Black,
                         fontSize = 22.sp,

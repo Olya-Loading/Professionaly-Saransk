@@ -117,7 +117,7 @@ fun LoginScreen(modifier: Modifier = Modifier,navController : NavHostController 
                         label = { Text(text = "email", color = darkGrey) },
                         shape = RoundedCornerShape(18), colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
-                            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.3f), unfocusedBorderColor = Color.Unspecified.copy(0.0f), focusedBorderColor = Color.Unspecified
+                            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.3f), unfocusedBorderColor = Color.LightGray.copy(0.3f), focusedBorderColor = Color.Unspecified.copy(0.3f)
                         )
 
                     )
